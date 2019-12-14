@@ -48,11 +48,11 @@ def shortest_path(M,start,goal):
     end_node.g = end_node.h = end_node.f = 0
     #print('end - ', end_node.position)
     # Initialize both open and closed list
-    open_set = set()
+    open_set = dict()
     closed_set = set()
     
     # Add the start node
-    open_set.add(start_node)
+    open_set[start_node.position] = start_node
     
     #ctr = 7
     #idx = 0
@@ -73,12 +73,12 @@ def shortest_path(M,start,goal):
         #        current_node = item
         #        current_index = index
          
-        min_f_node = min(open_set, key=attrgetter('f'))
-        current_node = min_f_node
+        min_f_position = min(open_set.keys(), key=(lambda k: open_set[k].f))
+        current_node = open_set[min_f_position]
         
         
         # Pop current off open list, add to closed list
-        open_set.remove(current_node)
+        del open_set[current_node.position]
         closed_set.add(current_node.position)
     
         #print('now the current_node ', current_node.position)
@@ -100,8 +100,8 @@ def shortest_path(M,start,goal):
             
             # if child is in the closedList, continue to beginning of for loop
             if child_node.position in closed_set:
-            #       print('child ', child_node.position, ' already in closed list, continue to beginning of for loop')
-                    continue
+            # print('child ', child_node.position, ' already in closed list, continue to beginning of for loop')
+              continue
                     
             
             # Create the f, g, and h values
@@ -115,13 +115,14 @@ def shortest_path(M,start,goal):
             #print(child_node.f)
             
             # Child is already in the open list, continue to beginning of for loop
-            if len([open_node for open_node in open_set if child_node.position == open_node.position and child_node.g >= open_node.g])>0:
-            #    print('child ', child_node.position, ' already in open list, continue to beginning of for loop')
-                continue
+            if child_node.position in open_set:
+                if child_node.g >= open_set[child_node.position].g :
+                    # print('child ', child_node.position, ' already in open list, continue to beginning of for loop')
+                    continue
             
             #print('adding to open list....')
             # Add the child to the open list
-            open_set.add(child_node)
+            open_set[child_node.position]= child_node
             #print('open list')
             #for each in open_set:
             #    print(each.position)
