@@ -37,6 +37,19 @@ def calculate_distance(coord_1, coord_2):
     
     return distance
 
+def reconstruct_path(current_node, goal):
+    if current_node.position == goal:
+        #print('Finally found goal')
+        path = []
+        current = current_node
+        while current is not None:
+            path.append(current.position)
+            current = current.parent
+        return path[::-1] # Return reversed path
+    
+    return None
+
+
 def shortest_path(M,start,goal):
     #print("shortest path called")
     
@@ -83,15 +96,10 @@ def shortest_path(M,start,goal):
     
         #print('now the current_node ', current_node.position)
         
-        # Found the goal
-        if current_node.position == end_node.position:
-            #print('found goal')
-            path = []
-            current = current_node
-            while current is not None:
-                path.append(current.position)
-                current = current.parent
-            return path[::-1] # Return reversed path
+        # Check if the goal has been reached
+        path = reconstruct_path(current_node, end_node.position)
+        if path:
+            return path
         
         for child in M.roads[current_node.position]:
             
