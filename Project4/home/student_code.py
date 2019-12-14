@@ -49,7 +49,7 @@ def shortest_path(M,start,goal):
     #print('end - ', end_node.position)
     # Initialize both open and closed list
     open_set = set()
-    closed_list = list()
+    closed_set = set()
     
     # Add the start node
     open_set.add(start_node)
@@ -79,7 +79,7 @@ def shortest_path(M,start,goal):
         
         # Pop current off open list, add to closed list
         open_set.remove(current_node)
-        closed_list.append(current_node)
+        closed_set.add(current_node.position)
     
         #print('now the current_node ', current_node.position)
         
@@ -99,8 +99,8 @@ def shortest_path(M,start,goal):
             #print('child node ', child_node.position)
             
             # if child is in the closedList, continue to beginning of for loop
-            if len([closed_child for closed_child in closed_list if child_node.position == closed_child.position])>0:
-            #        print('child ', child_node.position, ' already in closed list, continue to beginning of for loop')
+            if child_node.position in closed_set:
+            #       print('child ', child_node.position, ' already in closed list, continue to beginning of for loop')
                     continue
                     
             
