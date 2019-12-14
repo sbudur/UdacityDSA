@@ -1,0 +1,2 @@
+As the problem states all operations must take O(1) time. So, I have used queues and hashmaps for this problem. Enqueue always at the head and dequeue from the tail, maximum amount of entries are limited to 5 here, the most recently used entries will be in the fron of the queue and least used in rear end of the queue. Also hashmaps to retrieve the entry based on key; where the key is the page number and the value being address of the node.
+
